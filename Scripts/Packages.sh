@@ -43,7 +43,7 @@ UPDATE_PACKAGE() {
 }
 
 # 仅保留 Argon 主题（适配 OpenWrt 最新界面）
-UPDATE_PACKAGE "argon" "sbwml/luci-theme-argon" "openwrt-25.12"
+UPDATE_PACKAGE "argon" "sbwml/luci-theme-argon" "openwrt-24.10"
 
 #引入私有扩展脚本（如有自定义需求可通过该文件扩展，方便与上游解耦）
 if [ -f "$GITHUB_WORKSPACE/Scripts/PRIVATE.sh" ]; then
