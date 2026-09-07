@@ -4,15 +4,6 @@
 
 PKG_PATH="$GITHUB_WORKSPACE/wrt/package"
 
-#修改argon主题字体和颜色配置
-if [ -d "$PKG_PATH/luci-theme-argon" ]; then
-	echo " "
-	if [ -f "$PKG_PATH/luci-theme-argon/luci-app-argon-config/root/etc/config/argon" ]; then
-		sed -i "s/primary '.*'/primary '#31a1a1'/; s/'0.2'/'0.5'/; s/'none'/'bing'/; s/'600'/'normal'/" \
-			"$PKG_PATH/luci-theme-argon/luci-app-argon-config/root/etc/config/argon"
-		echo "theme-argon has been fixed!"
-	fi
-fi
 
 #修复Rust编译问题 (避免CI中llvm依赖导致构建中断)
 FEEDS_PACKAGES="$PKG_PATH/../feeds/packages"
