@@ -46,7 +46,7 @@ jobs:
       # 默认WIFI密码
       WRT_WORD: 12345678
       # 默认管理IP
-      WRT_IP: 192.168.10.1
+      WRT_IP: 192.168.31.1
       # 默认密码
       WRT_PW: 无
       # 源码链接 (跟踪 snapshot)
