@@ -1,17 +1,11 @@
 # SPDX-License-Identifier: MIT
 # Copyright (C) 2026 VIKINGYFY
 
-#CI项目
-name: OWRT-ALL
+# 专属兆能 ZN-M2 (No WiFi / 1GB RAM) 编译工作流
+name: ZN-M2
 
-#CI计划
+# CI 计划：仅纯手工触发，避免浪费 GitHub Actions 额度
 on:
-  #自动编译已停用
-  #workflow_run:
-  #  workflows: ["Auto-Clean"]
-  #  types:
-  #    - completed
-  #手动编译
   workflow_dispatch:
     inputs:
       PACKAGE:
@@ -24,45 +18,44 @@ on:
         required: false
         type: boolean
 
-#CI权限
+# CI 权限
 permissions: write-all
 
-#CI任务
+# CI 任务
 jobs:
   config:
-    name: ${{matrix.CONFIG}}
+    name: ZN-M2-NOWIFI
     strategy:
       fail-fast: false
-      #max-parallel: 3
       matrix:
-        CONFIG: [ROCKCHIP, X86]
+        CONFIG: [ZN-M2-NOWIFI]
         SOURCE: [VIKINGYFY/immortalwrt]
-        BRANCH: [owrt]
+        BRANCH: [main]
 
-    #调用公用编译核心WRT-CORE.yml
+    # 调用公用编译核心 WRT-CORE.yml
     uses: ./.github/workflows/WRT-CORE.yml
     with:
-      #编译配置
+      # 编译配置 (仅包含 ZN-M2)
       WRT_CONFIG: ${{matrix.CONFIG}}
-      #默认主题
-      WRT_THEME: aurora
-      #默认主机名
-      WRT_NAME: OWRT
-      #默认WIFI名称
+      # 默认主题设为 argon
+      WRT_THEME: argon
+      # 默认主机名
+      WRT_NAME: ZN-M2
+      # 默认WIFI名称 (无WIFI模式仅作占位)
       WRT_SSID: OWRT
-      #默认WIFI密码
+      # 默认WIFI密码
       WRT_WORD: 12345678
-      #默认地址
+      # 默认管理IP
       WRT_IP: 192.168.10.1
-      #默认密码，仅作提示，修改无用
+      # 默认密码
       WRT_PW: 无
-      #源码链接
+      # 源码链接 (跟踪 snapshot)
       WRT_REPO: https://github.com/${{matrix.SOURCE}}.git
-      #源码分支
+      # 源码分支
       WRT_BRANCH: ${{matrix.BRANCH}}
-      #源码名称
+      # 源码名称
       WRT_SOURCE: ${{matrix.SOURCE}}
-      #插件调整
+      # 插件调整
       WRT_PACKAGE: ${{inputs.PACKAGE}}
-      #仅输出配置文件
+      # 仅输出配置文件
       WRT_TEST: ${{inputs.TEST || false}}
