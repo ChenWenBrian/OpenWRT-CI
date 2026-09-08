@@ -5,6 +5,13 @@
 PKG_PATH="$GITHUB_WORKSPACE/wrt/package"
 
 
+#修改argon主题字体为正常字重（上游默认600粗体，改为normal）
+ARGON_CFG="$PKG_PATH/luci-theme-argon/luci-app-argon-config/root/etc/config/argon"
+if [ -f "$ARGON_CFG" ]; then
+	sed -i "s/font_weight '600'/font_weight 'normal'/" "$ARGON_CFG"
+	echo "argon font_weight set to normal!"
+fi
+
 #修复Rust编译问题 (避免CI中llvm依赖导致构建中断)
 FEEDS_PACKAGES="$PKG_PATH/../feeds/packages"
 RUST_FILE="$(find "$FEEDS_PACKAGES" -maxdepth 3 -type f -wholename '*/rust/Makefile' -print -quit 2>/dev/null)"
